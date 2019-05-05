@@ -1,0 +1,39 @@
+/*
+0 to 600px - phone
+600px to 900px - Tablet portrait
+900px - 1200px - Tablet Landscpe
+1200px to 1800px - where the normal styling applies
+1900px+ - for big monitors 
+*/
+
+// 1em(by default) = 16px
+@mixin respond($breakpoint) {
+    // 600px/16px = 37.5
+    @if $breakpoint==phone {
+        @media(max-width: 37.5em) {
+            @content
+        }
+        ;
+    }
+    //900px/16px = 56.25
+    @if $breakpoint==tab-port {
+        @media(max-width: 56.25em) {
+            @content
+        }
+        ;
+    }
+    //1200px/16px = 75
+    @if $breakpoint==tab-land {
+        @media(max-width: 75em) {
+            @content
+        }
+        ;
+    }
+    //1800px/16px = 112.5
+    @if $breakpoint==big {
+        @media(min-width: 112.5em) {
+            @content
+        }
+        ;
+    }
+}

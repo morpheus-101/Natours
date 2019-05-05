@@ -1,0 +1,1105 @@
+/*
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+
+@import "sass/mixins.scss";
+$color-primary: #55c57a;
+$color-primary-light:#7ed56f;
+$color-primary-dark:#28b485;
+$color-dark-gray:#777;
+$color-light-gray-1:#f7f7f7;
+$default-font-size:1.6rem;
+$color-secondary-light:#ffb900;
+$color-secondary-dark:#ff7700;
+$color-tertiary-light:#2998ff;
+$color-tertiary-dark:#5643fa;
+*,
+*::after,
+*::before {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html {
+    // NOTE: 16px is the default font size of every web page.
+    // The "rem" unit is a unit that applies to the entire web page. 
+    // This defines the value of 1rem for the entire web page, cause it is written in the html tag.
+    // You will have to decide what value of "rem" do you want for the entire web page, here I have decoded it to be 1rem = 10px;
+    // Now make the calculations accordingly to get the percentage form of 10px, which is 62.5%.
+    // This is nothing but 62.5% of 16px = 10px = 1rem; 10px/16px = 62.5%; 
+    font-size: 62.5%;
+    // Setting font-sizes via media queries
+    // For tablets in landscape mode I want "1rem" to be equal to 9px;
+    // 9px/16px = 56.25%;
+    @include respond(tab-land) {
+        font-size: 56.25%;
+    }
+    // For tablets in portrait mode I want "1rem" to be equal to 8px;
+    // 8px/16px = 50%;
+    @include respond(tab-port) {
+        font-size: 50%;
+    }
+    // For big screens I want "1rem" to be equal to 12px;
+    // 12px/16px = 75%;
+    @include respond(big) {
+        font-size: 75%;
+    }
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    color: $color-dark-gray;
+    padding: 2rem;
+    @include respond(tab-port) {
+        padding: 0;
+    }
+}
+
+.header {
+    height: 95vh;
+    /* 95% of veiw port height */
+    background-image: linear-gradient(to top, rgba(126, 213, 111, 0.10), $color-primary-dark), url(../img/hero.jpg);
+    background-size: cover;
+    background-position: top;
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    position: relative;
+    // & == .header in this case
+    &__logo-box {
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+    }
+    &__text-box {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    &__logo {
+        height: 3.5rem;
+        width: auto;
+    }
+    @include respond(phone) {
+        clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+    }
+}
+
+.heading-primary {
+    color: white;
+    text-transform: uppercase;
+    backface-visibility: hidden;
+    margin-bottom: 6rem;
+    &--main {
+        display: block;
+        font-size: 6rem;
+        letter-spacing: 3.5rem;
+        font-weight: 400;
+        animation-name: moveInLeft;
+        animation-duration: 1s;
+        animation-timing-function: ease-in;
+        @include respond(phone) {
+            letter-spacing: 1rem;
+            font-size: 5rem;
+        }
+    }
+    &--sub {
+        display: block;
+        font-size: 2rem;
+        letter-spacing: 1.7rem;
+        font-weight: 700;
+        animation-name: moveInRight;
+        animation-duration: 1s;
+        animation-timing-function: ease-in;
+        @include respond(phone) {
+            letter-spacing: 0.5rem;
+        }
+    }
+}
+
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-10rem);
+    }
+    80% {
+        transform: translateX(2rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-10rem);
+    }
+    80% {
+        transform: translateX(-2rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.btn {
+    &:link,
+    &:visited,
+    & {
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block;
+        border-radius: 10rem;
+        transition: all 0.2s;
+        position: relative;
+        font-size: 1.7rem;
+        border: none;
+    }
+    &-white {
+        background-color: white;
+        color: $color-dark-gray;
+        &::after {
+            background-color: white;
+        }
+    }
+    &-green {
+        background-color: $color-primary-light;
+        color: white;
+        &::after {
+            background-color: $color-primary;
+        }
+    }
+    &:hover {
+        transform: translateY(-0.3rem);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.30);
+        &::after {
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;
+        }
+    }
+    &:active {
+        transform: translateY(-0.1rem);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.30);
+    }
+    &::after {
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.4s;
+    }
+    &--animated {
+        animation-name: moveInBottom;
+        animation-duration: 1s;
+        animation-timing-function: ease-in;
+    }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(15rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@import "sass/grid.scss";
+.section-about {
+    background-color: $color-light-gray-1;
+    padding: 25rem 0;
+    margin-top: -25vh;
+    @include respond(tab-port) {
+        padding: 20rem 0;
+    }
+}
+
+.heading-secondary {
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    background-image: linear-gradient(to right, $color-primary, $color-primary-dark);
+    display: inline-block;
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.2rem;
+    &:hover {
+        transform: skewY(2deg) skewX(-15deg) scale(1.1);
+        text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.20);
+    }
+    @include respond(tab-port) {
+        font-size: 3.0rem;
+    }
+    @include respond(phone) {
+        font-size: 2.5rem;
+    }
+}
+
+.u-center-text {
+    text-align: center;
+}
+
+.u-margin-bottom-big {
+    margin-bottom: 8rem;
+}
+
+.u-margin-top-big {
+    margin-top: 8rem;
+}
+
+.u-margin-bottom-medium {
+    margin-bottom: 4rem;
+}
+
+.u-margin-bottom-small {
+    margin-bottom: 1.5rem;
+}
+
+.heading-tertiary {
+    font-size: $default-font-size;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.paragraph {
+    font-size: $default-font-size;
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}
+
+.btn-text {
+    &:link,
+    &:visited {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $color-primary-dark;
+        display: inline-block;
+        text-decoration: none;
+        border-bottom: 1px solid $color-primary;
+        padding: 0.3rem;
+        transition: all 0.3s;
+        border-radius: 10rem;
+        padding: 1rem;
+    }
+    &:hover {
+        background-color: $color-primary;
+        color: white;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+        transform: translateY(-0.2rem);
+    }
+    &:active {
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+        transform: translateY(0);
+    }
+}
+
+.composition {
+    position: relative;
+    &__photo {
+        width: 60%;
+        box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.4);
+        border-radius: 3px;
+        position: absolute;
+        z-index: 10;
+        transition: all 0.3s;
+        outline-offset: 1.5rem;
+        @include respond(tab-port) {
+            position: relative;
+            float: left;
+            width: 33.33333%;
+        }
+        &--p1 {
+            left: 0;
+            top: -2rem;
+            @include respond(tab-port) {
+                left: 0;
+                top: 0rem;
+                transform: scale(1.2);
+            }
+        }
+        &--p2 {
+            right: 0;
+            top: 3rem;
+            @include respond(tab-port) {
+                top: -1rem;
+                transform: scale(1.3);
+                z-index: 100;
+            }
+        }
+        &--p3 {
+            left: 20%;
+            top: 15rem;
+            @include respond(tab-port) {
+                top: 1rem;
+                left: 0;
+                transform: scale(1.1);
+            }
+        }
+        &:hover {
+            outline: 1rem solid $color-primary;
+            transform: scale(1.1);
+            box-shadow: 0 5.5rem 3rem rgba(0, 0, 0, 0.5);
+            z-index: 20;
+        }
+    }
+    &:hover &__photo:not(:hover) {
+        transform: scale(0.90);
+    }
+}
+
+.section-features {
+    margin-top: -9rem;
+    padding: 20rem 0;
+    background-image: linear-gradient(to top, rgba(126, 213, 111, 0.10), $color-primary-dark), url(../img/nat-4.jpg);
+    background-size: cover;
+    transform: skewY(-7deg);
+    &>* {
+        transform: skewY(7deg);
+    }
+    @include respond(tab-port) {
+        padding: 10rem 0;
+    }
+}
+
+.feature-box {
+    background-color: rgba(255, 255, 255, 1);
+    font-size: $default-font-size;
+    padding: 2.5rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    box-shadow: 0 5.5rem 3rem rgba(0, 0, 0, 0.50);
+    transition: all 0.3s;
+    @include respond(tab-port) {
+        padding: 2rem;
+    }
+    &__icon {
+        font-size: 7rem;
+        margin-bottom: 0.5rem;
+        background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+        display: inline-block;
+        -webkit-background-clip: text;
+        color: transparent;
+        @include respond(tab-port) {
+            margin-bottom: 0rem;
+        }
+    }
+    &:hover {
+        transform: translateY(-2rem);
+        transform: scale(1.05);
+    }
+}
+
+.section-tours {
+    background-color: $color-light-gray-1;
+    padding: 25rem 0 15rem 0;
+    margin-top: -10rem;
+    @include respond(tab-port) {
+        padding: 20rem 0 10rem 0;
+    }
+}
+
+.card {
+    //CREATION AND STYLING OF THE CARD
+    perspective: 150rem;
+    position: relative;
+    height: 52rem;
+    &__side {
+        height: 52rem;
+        transition: all 0.8s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        backface-visibility: hidden;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 5.5rem 3rem rgba(0, 0, 0, 0.15);
+        &--front {
+            background-color: white;
+        }
+        &--back {
+            background-color: green;
+            transform: rotateY(180deg);
+            &-1 {
+                background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark);
+            }
+            &-2 {
+                background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
+            }
+            &-3 {
+                background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark);
+            }
+        }
+    }
+    &:hover &__side--front {
+        transform: rotateY(-180deg);
+    }
+    &:hover &__side--back {
+        transform: rotateY(0deg);
+    }
+    //DETAILS AND CONTENTS OF THE CARD(FRONT SIDE)
+    &__picture {
+        background-size: cover;
+        height: 23rem;
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        &--1 {
+            background-image: linear-gradient(to top, rgba(255, 185, 0, 0.1), $color-secondary-dark), url(../img/nat-5.jpg);
+        }
+        &--2 {
+            background-image: linear-gradient(to top, rgba(85, 197, 122, 0.1), $color-primary-dark), url(../img/nat-6.jpg);
+        }
+        &--3 {
+            background-image: linear-gradient(to top, rgba(41, 152, 255, 0.1), $color-tertiary-dark), url(../img/nat-7.jpg);
+        }
+    }
+    &__heading {
+        font-size: 2.8rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: white;
+        position: absolute;
+        top: 14rem;
+        right: 1rem;
+    }
+    &__heading-span {
+        &--1 {
+            border-radius: 0.3rem;
+            padding: 0.7rem;
+            background-image: linear-gradient(to right bottom, rgba($color-secondary-light, 0.8), rgba($color-secondary-dark, 0.8));
+        }
+        &--2 {
+            border-radius: 0.3rem;
+            padding: 0.7rem;
+            background-image: linear-gradient(to right bottom, rgba($color-primary-light, 0.8), rgba($color-primary-dark, 0.8));
+        }
+        &--3 {
+            border-radius: 0.3rem;
+            padding: 0.7rem;
+            background-image: linear-gradient(to right bottom, rgba($color-tertiary-light, 0.8), rgba($color-tertiary-dark, 0.8));
+        }
+    }
+    &__details--1 {
+        padding: 3rem;
+        ul {
+            list-style: none;
+            width: 80%;
+            margin: 0 auto;
+            li {
+                text-align: center;
+                font-size: 1.5rem;
+                padding: 1rem;
+                &:not(:last-child) {
+                    border-bottom: 1px solid $color-secondary-light;
+                }
+            }
+        }
+    }
+    &__details--2 {
+        padding: 3rem;
+        ul {
+            list-style: none;
+            width: 80%;
+            margin: 0 auto;
+            li {
+                text-align: center;
+                font-size: 1.5rem;
+                padding: 1rem;
+                &:not(:last-child) {
+                    border-bottom: 1px solid $color-primary-light;
+                }
+            }
+        }
+    }
+    &__details--3 {
+        padding: 3rem;
+        ul {
+            list-style: none;
+            width: 80%;
+            margin: 0 auto;
+            li {
+                text-align: center;
+                font-size: 1.5rem;
+                padding: 1rem;
+                &:not(:last-child) {
+                    border-bottom: 1px solid $color-tertiary-light;
+                }
+            }
+        }
+    }
+    //DETAILS AND CONTENTS OF THE CARD(BACK SIDE)
+    &__cta {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        text-align: center;
+    }
+    &__price-box {
+        text-align: center;
+        margin-bottom: 8rem;
+        color: white;
+    }
+    &__price-only {
+        font-size: 2.5rem;
+        text-transform: uppercase;
+    }
+    &__price-value {
+        font-size: 7rem;
+        font-weight: 100;
+    }
+    //--------------------------------------------
+    @include respond(tab-port) {
+        //CREATION AND STYLING OF THE CARD
+        height: auto;
+        border-radius: 0.5rem;
+        background-color: white;
+        box-shadow: 0 5.5rem 3rem rgba(0, 0, 0, 0.15);
+        &__side {
+            height: auto;
+            position: relative;
+            &--front {
+                background-color: white;
+            }
+            &--back {
+                background-color: green;
+                transform: rotateY(0deg);
+                // clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+        &:hover &__side--front {
+            transform: rotateY(0deg);
+        }
+        //DETAILS AND CONTENTS OF THE CARD(BACK SIDE)
+        &__cta {
+            position: relative;
+            top: 0%;
+            left: 0%;
+            transform: translate(0);
+            width: 100%;
+            padding: 7rem 4rem 4rem 4rem;
+        }
+        &__price-box {
+            margin-bottom: 3rem;
+        }
+        &__price-value {
+            font-size: 7rem;
+        }
+    }
+}
+
+.section-stories {
+    padding: 15rem 0;
+    position: relative;
+    @include respond(tab-port) {
+        padding: 10rem 0;
+    }
+}
+
+.story {
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: 0 5.5rem 4rem rgba(0, 0, 0, 0.15);
+    background-color: rgba(white, 1);
+    border-radius: 0.5rem;
+    padding: 6rem;
+    font-size: $default-font-size;
+    transform: skewX(-12deg);
+    padding-left: 9rem;
+    @include respond(tab-port) {
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+        transform: skewX(0deg);
+    }
+    @include respond(phone) {
+        transform: skewX(0deg);
+    }
+    &__shape {
+        width: 17rem;
+        height: 17rem;
+        float: left;
+        shape-outside: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+        transform: translate(-3rem) skewX(12deg);
+        position: relative;
+        @include respond(phone) {
+            transform: translate(-3rem) skewX(0deg);
+        }
+        @include respond(tab-port) {
+            transform: translate(-3rem) skewX(0deg);
+        }
+    }
+    &__image {
+        height: 100%;
+        transform: translateX(-5rem) scale(1.4);
+        transition: all 0.5s;
+        backface-visibility: hidden;
+    }
+    &__text {
+        transform: skewX(12deg);
+        @include respond(phone) {
+            transform: skewX(0deg);
+        }
+        @include respond(tab-port) {
+            transform: skewX(0deg);
+        }
+    }
+    &__caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -30%);
+        color: white;
+        font-size: 1.9rem;
+        text-align: center;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: all 0.5s;
+    }
+    &:hover &__caption {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    &:hover &__image {
+        transform: translateX(-5rem) scale(1);
+        filter: brightness(50%);
+    }
+}
+
+.bg-video {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.2;
+    overflow: hidden;
+    &__content {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.section-book {
+    padding: 15rem 0;
+    background-image: linear-gradient(to top, $color-primary-light, $color-primary-dark);
+    @include respond(tab-port) {
+        padding: 10rem 0;
+    }
+}
+
+.book {
+    background-image: linear-gradient(105deg, rgba(white, 0.9) 0%, rgba(white, 0.9) 50%, transparent 50%), url(../img/nat-10.jpg);
+    background-size: cover;
+    // height: 50rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 5.5rem 3rem rgba(0, 0, 0, 0.4);
+    &__form {
+        width: 50%;
+        padding: 6rem;
+        @include respond(tab-land) {
+            width: 65%;
+        }
+        @include respond(tab-port) {
+            width: 100%;
+        }
+    }
+    @include respond(tab-land) {
+        background-image: linear-gradient(105deg, rgba(white, 0.9) 0%, rgba(white, 0.9) 65%, transparent 65%), url(../img/nat-10.jpg);
+    }
+    @include respond(tab-port) {
+        background-image: linear-gradient(105deg, rgba(white, 0.9) 0%, rgba(white, 0.9) 100%, transparent 100%), url(../img/nat-10.jpg);
+    }
+}
+
+.form {
+    &__group:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+    &__input {
+        font-size: 1.5rem;
+        font-family: inherit;
+        color: inherit;
+        padding: 1.5rem 2rem;
+        border-radius: 2px;
+        background-color: rgba(white, 0.5);
+        border: none;
+        border-bottom: 3px solid transparent;
+        width: 90%;
+        display: block;
+        transition: all 0.3s;
+        @include respond(tab-port) {
+            width: 100%;
+        }
+        &::-webkit-input-placeholder {
+            color: #5f5f5f;
+        }
+        &:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid $color-primary;
+        }
+        &:focus:invalid {
+            border-bottom: 3px solid $color-secondary-dark;
+        }
+    }
+    &__label {
+        font-size: 1.2rem;
+        font-family: 'Lato' sans-serif;
+        font-weight: 700;
+        display: block;
+        margin-top: 0.7rem;
+        margin-left: 2rem;
+        transition: all 0.3s;
+    }
+    &__input:placeholder-shown+&__label {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem);
+    }
+    &__radio-group {
+        width: 49%;
+        display: inline-block;
+        @include respond(tab-port) {
+            width: 100%;
+        }
+    }
+    &__radio-input {
+        display: none;
+    }
+    &__radio-label {
+        font-size: $default-font-size;
+        cursor: pointer;
+        position: relative;
+        padding-left: 4.5rem;
+    }
+    &__radio-button {
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid $color-primary;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: -0.4rem;
+        &::after {
+            content: "";
+            display: block;
+            height: 1.3rem;
+            width: 1.3rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: $color-primary;
+            opacity: 0;
+            transition: all 0.2s;
+        }
+    }
+    &__radio-input:checked~&__radio-label &__radio-button::after {
+        opacity: 1;
+    }
+}
+
+.footer {
+    background-color: rgb(33, 33, 33);
+    padding: 10rem 0;
+    @include respond(tab-port) {
+        padding: 7rem 0;
+    }
+    @include respond(phone) {
+        padding: 5.5rem 0;
+    }
+    font-size: 1.4rem;
+    &__logo-box {
+        text-align: center;
+        margin-bottom: 8rem;
+    }
+    &__logo {
+        width: 15rem;
+        height: auto;
+    }
+    &__navigation {
+        border-top: 1px solid $color-light-gray-1;
+        padding-top: 2rem;
+        display: inline-block;
+        @include respond(tab-port) {
+            width: 100%;
+            text-align: center;
+        }
+    }
+    &__list {
+        list-style: none;
+    }
+    &__item {
+        display: inline-block;
+        &:not(:last-child) {
+            margin-right: 2rem;
+        }
+    }
+    &__link {
+        &:link,
+        &:visited {
+            color: $color-light-gray-1;
+            text-decoration: none;
+            text-transform: uppercase;
+            display: inline-block;
+            font-size: 1.5rem;
+            transition: all 0.2s;
+            background-color: rgb(33, 33, 33);
+        }
+        &:hover,
+        &:active {
+            color: $color-primary;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+            transform: rotate(5deg) scale(1.2);
+        }
+    }
+    &__copyright {
+        border-top: 1px solid $color-light-gray-1;
+        padding-top: 2rem;
+        width: 80%;
+        float: right;
+        font-size: 1.5rem;
+        color: white;
+        @include respond(tab-port) {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
+
+.navigation {
+    &__checkbox {
+        display: none;
+    }
+    &__button {
+        background-color: white;
+        height: 7rem;
+        width: 7rem;
+        position: fixed;
+        top: 6rem;
+        right: 6rem;
+        border-radius: 50%;
+        z-index: 2000;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.20);
+        text-align: center;
+        @include respond(tab-port) {
+            top: 3rem;
+            right: 3rem;
+        }
+        @include respond(phone) {
+            top: 2rem;
+            right: 2rem;
+        }
+    }
+    &__background {
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6.5rem;
+        right: 6.5rem;
+        background-image: radial-gradient($color-primary-light, $color-primary-dark);
+        z-index: 1000;
+        //transform: scale(100);
+        transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        @include respond(tab-port) {
+            top: 3.5rem;
+            right: 3.5rem;
+        }
+        @include respond(phone) {
+            top: 2.5rem;
+            right: 2.5rem;
+        }
+    }
+    &__nav {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 1500;
+        opacity: 0;
+        width: 0;
+        transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    &__list {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        list-style: none;
+        text-align: center;
+    }
+    &__item {
+        margin: 1rem;
+    }
+    &__link {
+        &:link,
+        &:visited {
+            font-size: 3rem;
+            font-weight: 300;
+            color: white;
+            padding: 1rem 2rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            background-image: linear-gradient(120deg, transparent 0%, transparent 50%, white 50%);
+            background-size: 220%;
+            transition: all 0.4s;
+            display: inline-block;
+        }
+        &:hover,
+        &:active {
+            background-position: 100%;
+            color: #5f5f5f;
+            transform: translateX(2rem);
+        }
+    }
+    &__checkbox:checked~&__background {
+        transform: scale(100);
+    }
+    &__checkbox:checked~&__nav {
+        opacity: 1;
+        width: 100%;
+    }
+    &__icon {
+        position: relative;
+        margin-top: 3.5rem;
+        &,
+        &::before,
+        &::after {
+            width: 3rem;
+            height: 2px;
+            background-color: #3f3f3f;
+            display: inline-block;
+        }
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            transition: all 0.2s;
+        }
+        &::before {
+            top: -0.8rem;
+        }
+        &::after {
+            top: 0.8rem;
+        }
+    }
+    &__button:hover &__icon::before {
+        top: -1rem;
+    }
+    &__button:hover &__icon::after {
+        top: 1rem;
+    }
+    &__checkbox:checked+&__button &__icon {
+        background-color: transparent;
+    }
+    &__checkbox:checked+&__button &__icon::before {
+        top: 0;
+        transform: rotate(135deg);
+    }
+    &__checkbox:checked+&__button &__icon::after {
+        top: 0;
+        transform: rotate(-135deg);
+    }
+}
+
+.popup {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3sec;
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+    &__close {
+        font-size: 3rem;
+        &:link,
+        &:visited {
+            color: #3f3f3f;
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        &:hover {
+            color: $color-primary-dark;
+        }
+    }
+    &:target &__content {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    &__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.5);
+        width: 75%;
+        background-color: white;
+        box-shadow: 0 5.5rem 4rem rgba(0, 0, 0, 0.2);
+        border-radius: 0.5rem;
+        display: table;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.4s;
+    }
+    &__left {
+        width: 33.333333%;
+        display: table-cell;
+    }
+    &__right {
+        width: 66.666667%;
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3rem 5rem;
+    }
+    &__img {
+        display: block;
+        width: 100%;
+    }
+    &__text {
+        font-size: 1.5rem;
+        margin-bottom: 4rem;
+        column-count: 2;
+        column-gap: 4rem;
+        column-rule: 1px solid $color-light-gray-1;
+        text-align: justify;
+        hyphens: auto;
+    }
+}
